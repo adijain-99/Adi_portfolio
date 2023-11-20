@@ -2,7 +2,7 @@
 <u>Data Analysis Portfolio</u>
 
 
-## Real-Time Cryptocurrency Price Analysis
+1. ## Real-Time Cryptocurrency Price Analysis
 
 I used a cryptocurrency API that provides real-time price data. The CoinGecko API.
 
@@ -92,7 +92,7 @@ plt.show()
 
 
 
-## Real-Time Predictive Modeling on the Titanic Dataset
+2. ## Real-Time Predictive Modeling on the Titanic Dataset
 
 Let's adapt the Titanic predictive modeling project to make it suitable for a real-time scenario. For a more practical real-time project, I used a continuous stream of data and update the model dynamically. However, it's important to note that deploying machine learning models in a real-time environment involves more complex considerations, such as model deployment frameworks, monitoring, and scalability. Below is a simplified example using a streaming approach with simulated real-time updates:
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
 
 
-## Twitter Sentiment Analysis
+3. ## Twitter Sentiment Analysis
 
 In this project, we'll use Natural Language Processing (NLP) techniques and a sentiment analysis algorithm to analyze the sentiment of tweets. We'll implement this using Python, Tweepy for Twitter data retrieval, and the popular NLP library, NLTK, for sentiment analysis.
 
@@ -383,6 +383,122 @@ This project offers a more sophisticated sentiment analysis approach, considers 
 1. Sentiment Distribution - Most tweets are neutral, but the distribution of sentiment polarity provides insights into the overall sentiment.
 2. Positive and Negative Words - Word clouds help identify the most frequent words associated with positive and negative sentiments in the analyzed tweets.
 3. Further Analysis - Explore sentiment patterns over time, sentiment correlations with specific hashtags, or sentiment differences across user demographics.
+
+
+
+
+4. ## Movie Data Scraping and Cleaning
+
+I'll scrape data from a website containing information about movies, clean the data using BeautifulSoup and Pandas, and draw conclusions about the movie dataset.
+
+```
+import requests
+from bs4 import BeautifulSoup
+import pandas as pd
+
+# Define the URL
+url = 'https://www.imdb.com/chart/top'
+
+# Send an HTTP request to the URL
+response = requests.get(url)
+
+# Parse the HTML content of the page
+soup = BeautifulSoup(response.text, 'html.parser')
+
+# Find the movie data within the HTML
+movie_data = soup.select('td.titleColumn')
+```
+
+Scrape Movie Genres from IMDb
+```
+genres_url = 'https://www.imdb.com/chart/top'
+genres_response = requests.get(genres_url)
+
+# Parse the HTML content of the page
+genres_soup = BeautifulSoup(genres_response.text, 'html.parser')
+
+# Find the movie genres within the HTML
+genre_data = genres_soup.select('td.titleColumn span.genre')
+
+# Extract genres
+genres = [genre.get_text().strip() for genre in genre_data]
+
+# Add the genres to the DataFrame
+movie_df['Genre'] = genres
+```
+
+
+Data Cleaning
+```
+# Initialize lists to store data
+titles = []
+years = []
+ratings = []
+
+# Iterate through each movie data element
+for movie in movie_data:
+    # Extract movie title
+    title = movie.find('a').get_text()
+    titles.append(title)
+
+    # Extract release year
+    year = movie.find('span', class_='secondaryInfo').get_text().strip('()')
+    years.append(year)
+
+    # Extract movie rating
+    rating = movie.find('strong').get_text()
+    ratings.append(float(rating))
+
+# Create a DataFrame with the collected data
+movie_df = pd.DataFrame({'Title': titles, 'Year': years, 'Rating': ratings})
+```
+
+Data Analysis and Conclusions
+```
+# Display the first few rows of the DataFrame
+print(movie_df.head())
+
+# Descriptive statistics of the ratings
+print(movie_df['Rating'].describe())
+
+# Visualize the distribution of movie genres
+plt.figure(figsize=(12, 8))
+movie_df['Genre'].value_counts().plot(kind='barh', color='skyblue')
+plt.title('Distribution of Genres in IMDb Top 250 Movies')
+plt.xlabel('Number of Movies')
+plt.ylabel('Genre')
+plt.show()
+
+# Explore average ratings by genre
+average_ratings_by_genre = movie_df.groupby('Genre')['Rating'].mean().sort_values(ascending=False)
+print('\nAverage Ratings by Genre:')
+print(average_ratings_by_genre)
+
+# Plotting the distribution of ratings
+movie_df['Rating'].plot(kind='hist', bins=20, edgecolor='black', figsize=(10, 6))
+plt.title('Distribution of IMDb Ratings for Top 250 Movies')
+plt.xlabel('Rating')
+plt.ylabel('Frequency')
+plt.show()
+
+# Conclusions
+average_rating = movie_df['Rating'].mean()
+print(f"The average rating of the top 250 movies on IMDb is: {average_rating:.2f}")
+```
+
+### Conclusions:
+1. Top 250 Movies Dataset - I scraped data from the IMDb Top 250 Movies page, including movie titles, release years, and ratings.
+2. Data Cleaning - I used BeautifulSoup to extract relevant information and Pandas to clean and organize the data into a DataFrame.
+3. Data Analysis - Descriptive statistics and a histogram were used to analyze the distribution of IMDb ratings for the top 250 movies.
+4. Average Rating - The project concludes by calculating and displaying the average rating of the top 250 movies on IMDb.
+5. Comparing Ratings Over Time - Scraping historical IMDb ratings or release dates to analyze how the ratings of top movies have changed over time.
+6. Genre Distribution Visualization - A bar chart visualizes the distribution of genres in the IMDb Top 250 Movies.
+7. Average Ratings by Genre - I calculated and displayed the average ratings for each genre, providing insights into which genres tend to have higher or lower ratings.
+
+
+
+
+
 
 
 
