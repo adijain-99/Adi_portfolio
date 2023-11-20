@@ -82,7 +82,7 @@ plt.show()
 - I added a calculate_sma function to calculate the simple moving average (SMA) of the Bitcoin price.
 - The check_alert function checks if the current price has crossed above or below the SMA and prints an alert message accordingly.
 - The update_plot function now includes plotting both the Bitcoin price and the SMA on the same plot.
-
+  
 ### Conclusions:
 1. Real-Time Bitcoin Price - The plot displays the real-time price of Bitcoin updated every minute.
 2. Trends and Patterns - The plot analyze trends and patterns in the Bitcoin price over time.
