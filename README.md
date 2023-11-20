@@ -2,7 +2,7 @@
 <u>Data Analysis Portfolio</u>
 
 
-1. ## Real-Time Cryptocurrency Price Analysis
+## 1. Real-Time Cryptocurrency Price Analysis
 
 I used a cryptocurrency API that provides real-time price data. The CoinGecko API.
 
@@ -92,7 +92,7 @@ plt.show()
 
 
 
-2. ## Real-Time Predictive Modeling on the Titanic Dataset
+## 2. Real-Time Predictive Modeling on the Titanic Dataset
 
 Let's adapt the Titanic predictive modeling project to make it suitable for a real-time scenario. For a more practical real-time project, I used a continuous stream of data and update the model dynamically. However, it's important to note that deploying machine learning models in a real-time environment involves more complex considerations, such as model deployment frameworks, monitoring, and scalability. Below is a simplified example using a streaming approach with simulated real-time updates:
 
@@ -235,7 +235,7 @@ if __name__ == '__main__':
 
 
 
-3. ## Twitter Sentiment Analysis
+## 3. Twitter Sentiment Analysis
 
 In this project, we'll use Natural Language Processing (NLP) techniques and a sentiment analysis algorithm to analyze the sentiment of tweets. We'll implement this using Python, Tweepy for Twitter data retrieval, and the popular NLP library, NLTK, for sentiment analysis.
 
@@ -387,7 +387,7 @@ This project offers a more sophisticated sentiment analysis approach, considers 
 
 
 
-4. ## Movie Data Scraping and Cleaning
+## 4. Movie Data Scraping and Cleaning
 
 I'll scrape data from a website containing information about movies, clean the data using BeautifulSoup and Pandas, and draw conclusions about the movie dataset.
 
