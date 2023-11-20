@@ -2,7 +2,7 @@
 Data Analysis Portfolio
 
 
-==Real-Time Cryptocurrency Price Analysis==
+## Real-Time Cryptocurrency Price Analysis
 
 I used a cryptocurrency API that provides real-time price data. The CoinGecko API.
 
@@ -235,4 +235,161 @@ if __name__ == '__main__':
 
 
 
-## 
+## Twitter Sentiment Analysis
+
+In this project, we'll use Natural Language Processing (NLP) techniques and a sentiment analysis algorithm to analyze the sentiment of tweets. We'll implement this using Python, Tweepy for Twitter data retrieval, and the popular NLP library, NLTK, for sentiment analysis.
+
+```
+import tweepy
+import pandas as pd
+import numpy as np
+import matplotlib.pyplot as plt
+import seaborn as sns
+from textblob import TextBlob
+from nltk.corpus import stopwords
+from wordcloud import WordCloud
+
+# Setting up Twitter API credentials
+consumer_key = 'your_consumer_key'
+consumer_secret = 'your_consumer_secret'
+access_token = 'your_access_token'
+access_token_secret = 'your_access_token_secret'
+
+# Authenticate with Twitter API
+auth = tweepy.OAuthHandler(consumer_key, consumer_secret)
+auth.set_access_token(access_token, access_token_secret)
+api = tweepy.API(auth)
+
+# Define a function to retrieve tweets
+def get_tweets(query, count=100):
+    tweets = tweepy.Cursor(api.search, q=query, lang="en").items(count)
+    tweet_list = [tweet.text for tweet in tweets]
+    return tweet_list
+
+# Get tweets related to a specific query (e.g., "Python")
+tweets = get_tweets("Python", count=200)
+
+# Preprocess tweets
+stop_words = set(stopwords.words('english'))
+
+def preprocess_tweet(tweet):
+    # Remove special characters, links, and stopwords
+    tweet = ' '.join([word.lower() for word in tweet.split() if word.isalpha() and word not in stop_words])
+    return tweet
+
+tweets = [preprocess_tweet(tweet) for tweet in tweets]
+
+# Analyze sentiment using TextBlob
+sentiments = [TextBlob(tweet).sentiment.polarity for tweet in tweets]
+```
+
+Also, I used an advanced NLP Model (VADER Sentiment Analysis). I introduced VADER Sentiment Analysis from NLTK, which is specifically designed for social media text.
+```
+from nltk.sentiment import SentimentIntensityAnalyzer
+
+# Initialize VADER Sentiment Analyzer
+sid = SentimentIntensityAnalyzer()
+
+# Analyze sentiment using VADER
+vader_sentiments = [sid.polarity_scores(tweet)['compound'] for tweet in tweets]
+```
+
+Also, I made a real-Time Dashboard with Dash. I used Dash, a Python web framework, to create a real-time dashboard for sentiment analysis. The dashboard updates every few seconds to display the sentiment histogram and word clouds for positive and negative sentiments.
+```
+import dash
+import dash_core_components as dcc
+import dash_html_components as html
+from dash.dependencies import Input, Output
+
+# Initialize Dash app
+app = dash.Dash(__name__)
+
+# Define layout of the dashboard
+app.layout = html.Div(children=[
+    dcc.Graph(id='sentiment-histogram'),
+    dcc.Graph(id='word-cloud-positive'),
+    dcc.Graph(id='word-cloud-negative')
+])
+
+# Define callback for real-time updates
+@app.callback(
+    [Output('sentiment-histogram', 'figure'),
+     Output('word-cloud-positive', 'figure'),
+     Output('word-cloud-negative', 'figure')],
+    [Input('interval-component', 'n_intervals')]
+)
+def update_dashboard(n_intervals):
+    # Get real-time tweets
+    real_time_tweets = get_tweets("AI", count=100)
+    
+    # Preprocess and analyze sentiment using TextBlob
+    real_time_tweets = [preprocess_tweet(tweet) for tweet in real_time_tweets]
+    real_time_sentiments = [TextBlob(tweet).sentiment.polarity for tweet in real_time_tweets]
+
+    # Update Sentiment Histogram
+    fig_sentiment = sns.histplot(real_time_sentiments, bins=20, kde=True)
+    fig_sentiment = plt.gcf()
+
+    # Update Word Clouds
+    real_time_positive_tweets = ' '.join([tweet for tweet, sentiment in zip(real_time_tweets, real_time_sentiments) if sentiment > 0])
+    real_time_negative_tweets = ' '.join([tweet for tweet, sentiment in zip(real_time_tweets, real_time_sentiments) if sentiment < 0])
+
+    wordcloud_positive = WordCloud(width=800, height=400, background_color='white').generate(real_time_positive_tweets)
+    fig_wordcloud_positive = plt.gcf()
+
+    wordcloud_negative = WordCloud(width=800, height=400, background_color='white').generate(real_time_negative_tweets)
+    fig_wordcloud_negative = plt.gcf()
+
+    return fig_sentiment, fig_wordcloud_positive, fig_wordcloud_negative
+
+# Run the Dash app
+if __name__ == '__main__':
+    app.run_server(debug=True)
+```
+
+
+Visualize Sentiment Analysis
+```
+sns.histplot(sentiments, bins=20, kde=True)
+plt.title('Sentiment Distribution in Tweets')
+plt.xlabel('Sentiment Polarity')
+plt.ylabel('Count')
+plt.show()
+
+# Display Word Cloud of positive and negative words
+positive_tweets = ' '.join([tweet for tweet, sentiment in zip(tweets, sentiments) if sentiment > 0])
+negative_tweets = ' '.join([tweet for tweet, sentiment in zip(tweets, sentiments) if sentiment < 0])
+
+# Word Cloud for Positive Tweets
+wordcloud_positive = WordCloud(width=800, height=400, background_color='white').generate(positive_tweets)
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud_positive, interpolation='bilinear')
+plt.title('Word Cloud for Positive Tweets')
+plt.axis('off')
+plt.show()
+
+# Word Cloud for Negative Tweets
+wordcloud_negative = WordCloud(width=800, height=400, background_color='white').generate(negative_tweets)
+plt.figure(figsize=(10, 5))
+plt.imshow(wordcloud_negative, interpolation='bilinear')
+plt.title('Word Cloud for Negative Tweets')
+plt.axis('off')
+plt.show()
+```
+
+This project offers a more sophisticated sentiment analysis approach, considers multiple queries, and presents the results in a real-time dashboard for continuous monitoring. 
+
+### Conclusions:
+1. Sentiment Distribution - Most tweets are neutral, but the distribution of sentiment polarity provides insights into the overall sentiment.
+2. Positive and Negative Words - Word clouds help identify the most frequent words associated with positive and negative sentiments in the analyzed tweets.
+3. Further Analysis - Explore sentiment patterns over time, sentiment correlations with specific hashtags, or sentiment differences across user demographics.
+
+
+
+
+
+
+
+
+
+
