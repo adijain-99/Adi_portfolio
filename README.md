@@ -2,7 +2,7 @@
 Data Analysis Portfolio
 
 
-## Real-Time Cryptocurrency Price Analysis
+==Real-Time Cryptocurrency Price Analysis==
 
 I used a cryptocurrency API that provides real-time price data. The CoinGecko API.
 
@@ -84,9 +84,11 @@ plt.show()
 - The update_plot function now includes plotting both the Bitcoin price and the SMA on the same plot.
 
 ### Conclusions:
-1) Real-Time Bitcoin Price - The plot displays the real-time price of Bitcoin updated every minute.
-2) Trends and Patterns - The plot analyze trends and patterns in the Bitcoin price over time.
-3) Integration with Dashboard - The plot helps to extend the project by integrating the real-time plot into a dashboard using tools like Dash or Streamlit.
+1. Real-Time Bitcoin Price - The plot displays the real-time price of Bitcoin updated every minute.
+2. Trends and Patterns - The plot analyze trends and patterns in the Bitcoin price over time.
+3. Integration with Dashboard - The plot helps to extend the project by integrating the real-time plot into a dashboard using tools like Dash or Streamlit.
+
+
 
 
 
@@ -226,6 +228,11 @@ if __name__ == '__main__':
 ```
 
 ### Conclusions:
-1) Real-Time Model Updates - The model is continuously updated with simulated real-time data.
-2) Real-Time Model Accuracy - The real-time accuracy of the model is continuously displayed.
-3) This model provide better persistence, logging, visualization, and even the option to deploy the real-time predictive model as an API through Flask API.
+1. Real-Time Model Updates - The model is continuously updated with simulated real-time data.
+2. Real-Time Model Accuracy - The real-time accuracy of the model is continuously displayed.
+3. This model provide better persistence, logging, visualization, and even the option to deploy the real-time predictive model as an API through Flask API.
+
+
+
+
+## 
